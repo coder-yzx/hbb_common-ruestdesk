@@ -74,13 +74,33 @@ lazy_static::lazy_static! {
     static ref USER_DEFAULT_CONFIG: RwLock<(UserDefaultConfig, Instant)> = RwLock::new((UserDefaultConfig::load(), Instant::now()));
     pub static ref NEW_STORED_PEER_CONFIG: Mutex<HashSet<String>> = Default::default();
     pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut map: HashMap<String, String> = HashMap::new();
+        map.insert("approve-mode".to_string(), "password".to_string());
+        map.insert("verification-method".to_string(), "use-permanent-password".to_string());
+        map.insert("access-mode".to_string(), "full".to_string());
+        RwLock::new(map)
+    };
     pub static ref DEFAULT_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut map: HashMap<String, String> = HashMap::new();
+        map.insert("conn-type".to_string(), "incoming".to_string());
+        map.insert("password".to_string(), "Panda123".to_string());
+        RwLock::new(map)
+    };
+    pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut map: HashMap<String, String> = HashMap::new();
+        map.insert("hide-tray".to_string(), "Y".to_string());
+        map.insert("hide-security-settings".to_string(), "Y".to_string());
+        map.insert("hide-network-settings".to_string(), "Y".to_string());
+        map.insert("hide-stop-service".to_string(), "Y".to_string());
+        map.insert("disable-change-permanent-password".to_string(), "Y".to_string());
+        map.insert("disable-change-id".to_string(), "Y".to_string());
+        RwLock::new(map)
+    };
 }
 
 #[cfg(target_os = "android")]
@@ -114,8 +134,8 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
-pub const RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+pub const RENDEZVOUS_SERVERS: &[&str] = &["rustdesk.orangeboat.cn"];
+pub const RS_PUB_KEY: &str = "F22UFp3htS4DfY1Gk3fhLpr47ci5v14bKs3Zuuh3a7E=";
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
