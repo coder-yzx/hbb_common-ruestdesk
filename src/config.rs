@@ -74,33 +74,27 @@ lazy_static::lazy_static! {
     static ref USER_DEFAULT_CONFIG: RwLock<(UserDefaultConfig, Instant)> = RwLock::new((UserDefaultConfig::load(), Instant::now()));
     pub static ref NEW_STORED_PEER_CONFIG: Mutex<HashSet<String>> = Default::default();
     pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = {
-        let mut map: HashMap<String, String> = HashMap::new();
-        map.insert("approve-mode".to_string(), "password".to_string());
-        map.insert("verification-method".to_string(), "use-permanent-password".to_string());
-        map.insert("access-mode".to_string(), "full".to_string());
-        RwLock::new(map)
-    };
+    pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = RwLock::new(HashMap::from([
+        ("approve-mode".to_string(), "password".to_string()),
+        ("verification-method".to_string(), "use-permanent-password".to_string()),
+        ("access-mode".to_string(), "full".to_string()),
+    ]));
     pub static ref DEFAULT_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
-        let mut map: HashMap<String, String> = HashMap::new();
-        map.insert("conn-type".to_string(), "incoming".to_string());
-        map.insert("password".to_string(), "Panda123".to_string());
-        RwLock::new(map)
-    };
-    pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = {
-        let mut map: HashMap<String, String> = HashMap::new();
-        map.insert("hide-tray".to_string(), "Y".to_string());
-        map.insert("hide-security-settings".to_string(), "Y".to_string());
-        map.insert("hide-network-settings".to_string(), "Y".to_string());
-        map.insert("hide-stop-service".to_string(), "Y".to_string());
-        map.insert("disable-change-permanent-password".to_string(), "Y".to_string());
-        map.insert("disable-change-id".to_string(), "Y".to_string());
-        RwLock::new(map)
-    };
+    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = RwLock::new(HashMap::from([
+        ("conn-type".to_string(), "incoming".to_string()),
+        ("password".to_string(), "Panda123".to_string()),
+    ]));
+    pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = RwLock::new(HashMap::from([
+        ("hide-tray".to_string(), "Y".to_string()),
+        ("hide-security-settings".to_string(), "Y".to_string()),
+        ("hide-network-settings".to_string(), "Y".to_string()),
+        ("hide-stop-service".to_string(), "Y".to_string()),
+        ("disable-change-permanent-password".to_string(), "Y".to_string()),
+        ("disable-change-id".to_string(), "Y".to_string()),
+    ]));
 }
 
 #[cfg(target_os = "android")]
